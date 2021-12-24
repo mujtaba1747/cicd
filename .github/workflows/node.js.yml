@@ -20,19 +20,19 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+#     - name: Use Node.js ${{ matrix.node-version }}
+#       uses: actions/setup-node@v2
+#       with:
+#         node-version: ${{ matrix.node-version }}
+#         cache: 'npm'
 
     # install deps here
 
-    - name: Install AWS CLI 2
-       run: |
-         curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-         unzip awscliv2.zip
-         sudo ./aws/install
+#     - name: Install AWS CLI 2
+#       run: |
+#          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+#          unzip awscliv2.zip
+#          sudo ./aws/install
 
     # Configure AWS credentials
     - name: Configure AWS credentials
@@ -44,7 +44,7 @@ jobs:
 
     # Deploy push to AWS S3
     - name: AWS Deploy push
-        run: |
+      run: |
           aws deploy push \
           --application-name ${{ matrix.appname }} \
           --description "This is a revision for the ${{ matrix.appname }}-${{ github.sha }}" \
@@ -54,7 +54,7 @@ jobs:
 
     # Create deployment to CodeDeploy
     - name: AWS Create Deployment
-        run: |
+      run: |
           aws deploy create-deployment \
            --application-name ${{ matrix.appname }} \
            --deployment-config-name CodeDeployDefault.OneAtATime \
